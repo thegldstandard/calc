@@ -1,0 +1,38 @@
+/* Example styling for range inputs */
+.slider-thumb-gold[type="range"] {
+  -webkit-appearance: none; /* Remove default background in Chrome */
+  width: 100%;
+  background-color: transparent; /* We'll style track in the pseudo-element */
+  cursor: pointer;
+}
+
+/* Track */
+.slider-thumb-gold[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  background-color: #FFD700;
+  border-radius: 2px;
+}
+
+/* Thumb (Chrome/Edge/Safari) */
+.slider-thumb-gold[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 18px;
+  width: 18px;
+  background-color: #FFD700;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  margin-top: -7px; /* Move thumb up so it's centered on the track */
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Thumb (Firefox) */
+.slider-thumb-gold[type="range"]::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  background-color: #FFD700;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
+/* For older IE or other browsers, you may need additional vendor prefixes. */
