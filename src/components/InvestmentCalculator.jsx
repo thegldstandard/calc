@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
 import {
   LineChart,
   Line,
@@ -24,13 +24,10 @@ const InvestmentCalculator = () => {
       },
     ];
 
-    let maxVal = initialDeposit;
-
     for (let year = 1; year <= years; year++) {
       // Example calculation
       let currentInvestment = initialDeposit * (1 + year * 0.08);
       let hybridInvestment = initialDeposit * Math.pow(1.07, year) * (1 + year * 0.08);
-      maxVal = Math.max(maxVal, currentInvestment, hybridInvestment);
 
       results.push({
         year,
@@ -99,13 +96,16 @@ const InvestmentCalculator = () => {
 
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data} margin={{ left: 50, right: 30 }}>
-          {/* Here we fill the chart area with #1F3A5F (dark blue). */}
+          {/* Fill the chart area with #1F3A5F (dark blue). */}
           <CartesianGrid stroke="#FFFFFF" strokeDasharray="0" vertical={false} fill="#1F3A5F" />
           <XAxis
             dataKey="year"
             label={{ value: "Years", position: "insideBottom", dy: 5, fill: "#FFD700" }}
             tick={{ fill: "#FFD700" }}
-            interval={0}
+            // If the number of years is more than 15, show every 5th year (interval=4),
+            // otherwise show every tick.
+            interval={years > 15 ? 4 : 0}
+            minTickGap={10}
           />
           <YAxis
             label={{
