@@ -41,7 +41,7 @@ const InvestmentCalculator = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] font-['DM Serif Display']">
-      {/* Inline slider styles */}
+      {/* Inline styles for slider */}
       <style>
         {`
           .slider-thumb-gold[type="range"] {
@@ -130,7 +130,6 @@ const InvestmentCalculator = () => {
 
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data} margin={{ left: 50, right: 30 }}>
-          {/* Fill chart with blue (#183965) */}
           <CartesianGrid stroke="#FFFFFF" strokeDasharray="0" vertical={false} fill="#183965" />
           <XAxis
             dataKey="year"
@@ -170,9 +169,10 @@ const InvestmentCalculator = () => {
         </LineChart>
       </ResponsiveContainer>
       
-      {/* Disclaimer */}
-      <p className="mt-4 text-xs text-black">
-        Disclaimer: This is not financial advice. Our strategy uses a 7% annual compound growth and an 8% average gold performance growth (8% non-compound growth for average gold performance). This is for educational purposes only. Past performance does not guarantee future results.
+      <p className="mt-4 text-[10px] text-black">
+        Disclaimer: This investment calculator is for informational and educational purposes only and does not constitute financial advice. The projections use assumed growth rates of 7% annual compound growth and 8% non-compounded average gold growth, which are hypothetical and not guarantees of future performance.
+        <br /><br />
+        Past performance does not indicate future results, and all investments carry risks, including loss of principal. We make no guarantees regarding accuracy or applicability. Users should seek professional financial advice before making investment decisions. We are not liable for any decisions based on this tool.
       </p>
     </div>
   );
