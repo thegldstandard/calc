@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -41,7 +41,42 @@ const InvestmentCalculator = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] font-['DM Serif Display']">
-      <h2 className="text-2xl font-bold mb-4 text-[#AA8355]">
+      {/* Inline slider styles */}
+      <style>
+        {`
+          .slider-thumb-gold[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            background-color: transparent;
+            cursor: pointer;
+          }
+          .slider-thumb-gold[type="range"]::-webkit-slider-runnable-track {
+            height: 4px;
+            background-color: #AA8355;
+            border-radius: 2px;
+          }
+          .slider-thumb-gold[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            background-color: #AA8355;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            margin-top: -7px;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+          }
+          .slider-thumb-gold[type="range"]::-moz-range-thumb {
+            height: 18px;
+            width: 18px;
+            background-color: #AA8355;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+          }
+        `}
+      </style>
+
+      <h2 className="text-2xl font-bold mb-4 text-white">
         How much do you want to invest?
       </h2>
       
@@ -73,7 +108,7 @@ const InvestmentCalculator = () => {
         "
       />
 
-      <h2 className="text-2xl font-bold mb-4 text-[#AA8355]">
+      <h2 className="text-2xl font-bold mb-4 text-white">
         How many years do you want to invest for?
       </h2>
       <div className="flex justify-between text-[#AA8355] text-sm mb-1">
@@ -90,24 +125,17 @@ const InvestmentCalculator = () => {
         step={1}
         value={years}
         onChange={(e) => setYears(Number(e.target.value))}
-        className="
-          w-full 
-          mt-2 
-          mb-6 
-          slider-thumb-gold
-        "
+        className="w-full mt-2 mb-6 slider-thumb-gold"
       />
 
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data} margin={{ left: 50, right: 30 }}>
-          {/* Fill the chart area with blue (#183965). */}
+          {/* Fill chart with blue (#183965) */}
           <CartesianGrid stroke="#FFFFFF" strokeDasharray="0" vertical={false} fill="#183965" />
           <XAxis
             dataKey="year"
             label={{ value: "Years", position: "insideBottom", dy: 5, fill: "#AA8355" }}
             tick={{ fill: "#AA8355" }}
-            // If the number of years is more than 15, show every 5th year (interval=4),
-            // otherwise show every tick.
             interval={years > 15 ? 4 : 0}
             minTickGap={10}
           />
@@ -143,7 +171,7 @@ const InvestmentCalculator = () => {
       </ResponsiveContainer>
       
       {/* Disclaimer */}
-      <p className="mt-4 text-xs text-gray-300">
+      <p className="mt-4 text-xs text-black">
         Disclaimer: This is not financial advice. Our strategy uses a 7% annual compound growth and an 8% average gold performance growth (8% non-compound growth for average gold performance). This is for educational purposes only. Past performance does not guarantee future results.
       </p>
     </div>
