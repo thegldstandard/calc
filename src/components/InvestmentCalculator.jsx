@@ -199,11 +199,7 @@ const InvestmentCalculator = () => {
       </ResponsiveContainer>
 
       <p className="mt-4 text-[10px] text-black">
-        Disclaimer: This investment calculator is for informational and educational purposes only and does not constitute financial or investment advice. The calculations are based on hypothetical assumptions and do not guarantee future performance.
-        <br /><br />
-        All investments carry risks, including potential loss of principal. Past performance is not indicative of future results. We make no warranties regarding accuracy, reliability, or applicability.
-        <br /><br />
-        Users should consult a qualified financial advisor before making investment decisions. We assume no liability for actions taken based on this tool.
+        Disclaimer: This investment calculator is for informational and educational purposes only and does not constitute financial or investment advice. The calculations are based on hypothetical assumptions and do not guarantee future performance. All investments carry risks, including potential loss of principal. Past performance is not indicative of future results. We make no warranties regarding accuracy, reliability, or applicability. Users should consult a qualified financial advisor before making investment decisions. We assume no liability for actions taken based on this tool.
       </p>
     </div>
   );
