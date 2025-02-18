@@ -19,7 +19,7 @@ const InvestmentCalculator = () => {
     let results = [
       {
         year: 0,
-        "Our Clients": initialDeposit,
+        "Our Strategy": initialDeposit,
         "Average Gold Performance": initialDeposit,
       },
     ];
@@ -31,7 +31,7 @@ const InvestmentCalculator = () => {
 
       results.push({
         year,
-        "Our Clients": hybridInvestment,
+        "Our Strategy": hybridInvestment,
         "Average Gold Performance": currentInvestment,
       });
     }
@@ -40,8 +40,10 @@ const InvestmentCalculator = () => {
   }, [initialDeposit, years]);
 
   return (
-    <div className="p-6 max-w-4xl mx-auto bg-[#1F3A5F] text-white shadow-lg rounded-xl border border-gold font-['DM Serif Display']">
-      <h2 className="text-2xl font-bold mb-4 text-gold">How much do you want to invest?</h2>
+    <div className="p-6 max-w-4xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] font-['DM Serif Display']">
+      <h2 className="text-2xl font-bold mb-4 text-[#AA8355]">
+        How much do you want to invest?
+      </h2>
       
       {/* Styled text input */}
       <input
@@ -60,21 +62,23 @@ const InvestmentCalculator = () => {
           w-full 
           text-black 
           border 
-          border-gold 
+          border-[#AA8355] 
           p-3 
           rounded-lg 
           bg-white 
           mb-6 
           focus:outline-none 
           focus:ring-2 
-          focus:ring-[#FFD700]
+          focus:ring-[#AA8355]
         "
       />
 
-      <h2 className="text-2xl font-bold mb-4 text-gold">How many years do you want to invest for?</h2>
-      <div className="flex justify-between text-gold text-sm mb-1">
+      <h2 className="text-2xl font-bold mb-4 text-[#AA8355]">
+        How many years do you want to invest for?
+      </h2>
+      <div className="flex justify-between text-[#AA8355] text-sm mb-1">
         <span>1 year</span>
-        <span className="text-lg font-bold text-[#FFD700]">{years} years</span>
+        <span className="text-lg font-bold text-[#AA8355]">{years} years</span>
         <span>30 years</span>
       </div>
       
@@ -96,12 +100,12 @@ const InvestmentCalculator = () => {
 
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data} margin={{ left: 50, right: 30 }}>
-          {/* Fill the chart area with #1F3A5F (dark blue). */}
-          <CartesianGrid stroke="#FFFFFF" strokeDasharray="0" vertical={false} fill="#1F3A5F" />
+          {/* Fill the chart area with blue (#183965). */}
+          <CartesianGrid stroke="#FFFFFF" strokeDasharray="0" vertical={false} fill="#183965" />
           <XAxis
             dataKey="year"
-            label={{ value: "Years", position: "insideBottom", dy: 5, fill: "#FFD700" }}
-            tick={{ fill: "#FFD700" }}
+            label={{ value: "Years", position: "insideBottom", dy: 5, fill: "#AA8355" }}
+            tick={{ fill: "#AA8355" }}
             // If the number of years is more than 15, show every 5th year (interval=4),
             // otherwise show every tick.
             interval={years > 15 ? 4 : 0}
@@ -112,12 +116,12 @@ const InvestmentCalculator = () => {
               value: "Value ($)",
               angle: -90,
               position: "insideLeft",
-              fill: "#FFD700",
+              fill: "#AA8355",
               dy: 0,
               dx: -50,
             }}
             domain={[initialDeposit, "auto"]}
-            tick={{ fill: "#FFD700" }}
+            tick={{ fill: "#AA8355" }}
             tickFormatter={(tick) => `$${Math.round(tick).toLocaleString()}`}
           />
           <Tooltip
@@ -125,18 +129,23 @@ const InvestmentCalculator = () => {
               name !== "year" ? `$${Math.round(Number(value)).toLocaleString()}` : null
             }
             contentStyle={{
-              backgroundColor: "#1F3A5F",
-              color: "#FFD700",
+              backgroundColor: "#183965",
+              color: "#AA8355",
               padding: "10px",
               textAlign: "left",
             }}
             labelFormatter={(label) => `Year ${label}`}
           />
-          <Legend wrapperStyle={{ color: "#FFD700", marginTop: 300 }} />
-          <Line type="monotone" dataKey="Our Clients" stroke="#FFD700" strokeWidth={2} dot={false} />
-          <Line type="monotone" dataKey="Average Gold Performance" stroke="#C0C0C0" strokeWidth={2} dot={false} />
+          <Legend wrapperStyle={{ color: "#AA8355", marginTop: 300 }} />
+          <Line type="monotone" dataKey="Our Strategy" stroke="#AA8355" strokeWidth={2} dot={false} />
+          <Line type="monotone" dataKey="Average Gold Performance" stroke="#F6F2E7" strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
+      
+      {/* Disclaimer */}
+      <p className="mt-4 text-xs text-gray-300">
+        Disclaimer: This is not financial advice. Our strategy uses a 7% annual compound growth and an 8% average gold performance growth (8% non-compound growth for average gold performance). This is for educational purposes only. Past performance does not guarantee future results.
+      </p>
     </div>
   );
 };
