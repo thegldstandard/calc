@@ -97,7 +97,8 @@ const InvestmentCalculator = () => {
             setInitialDeposit(value === "" ? "" : Number(value));
           }
         }}
-        className="w-full text-black border border-[#AA8355] p-2 rounded-lg bg-white mb-4 focus:outline-none focus:ring-2 focus:ring-[#AA8355]"
+        style={{ height: "30px" }}
+        className="w-full text-black border border-[#AA8355] px-2 rounded-lg bg-white mb-4 focus:outline-none focus:ring-2 focus:ring-[#AA8355]"
       />
 
       <h2 className="text-base font-bold mb-2 text-white">
@@ -109,6 +110,7 @@ const InvestmentCalculator = () => {
         <span>30 years</span>
       </div>
 
+      {/* Moved slider up by reducing margin-top from mt-2 to mt-1 */}
       <input
         type="range"
         min={1}
@@ -116,11 +118,11 @@ const InvestmentCalculator = () => {
         step={1}
         value={years}
         onChange={(e) => setYears(Number(e.target.value))}
-        className="w-full mt-2 mb-4 slider-thumb-gold"
+        className="w-full mt-1 mb-4 slider-thumb-gold"
       />
 
       <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={data} margin={{ left: 50, right: 10 }}>
+        <LineChart data={data} margin={{ left: 40, right: 10 }}>
           <CartesianGrid
             stroke="#FFFFFF"
             strokeDasharray="0"
@@ -146,7 +148,7 @@ const InvestmentCalculator = () => {
               position: "insideLeft",
               fill: "#AA8355",
               dy: 0,
-              dx: -50, // increased further left
+              dx: -50, // reverted back to -50
             }}
             domain={["auto", "auto"]}
             tick={{ fill: "#AA8355" }}
