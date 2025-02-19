@@ -29,19 +29,17 @@ const InvestmentCalculator = () => {
       let currentInvestment = initialDeposit * (1 + year * 0.08);
       let hybridInvestment =
         initialDeposit * Math.pow(1.07, year) * (1 + year * 0.08);
-
       results.push({
         year,
         "Our Strategy": hybridInvestment,
         "Average Gold Performance": currentInvestment,
       });
     }
-
     setData(results);
   }, [initialDeposit, years]);
 
   return (
-    <div className="p-3 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.125px] font-['DM Serif Display']">
+    <div className="p-2 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.125px] font-['DM Serif Display']">
       {/* Inline styles for the slider */}
       <style>
         {`
@@ -77,29 +75,34 @@ const InvestmentCalculator = () => {
         `}
       </style>
 
-      {/* Question Text */}
-      <h2 className="text-base font-bold mb-2 text-white">
-        How much do you want to invest?
-      </h2>
-      <input
-        type="text"
-        min="1"
-        max="5000000"
-        step="1"
-        value={
-          initialDeposit === ""
-            ? "$"
-            : `$${Math.round(initialDeposit).toLocaleString()}`
-        }
-        onChange={(e) => {
-          const value = e.target.value.replace(/\$/g, "").replace(/,/g, "");
-          if (!isNaN(value) && (value === "" || (value >= 1 && value <= 5000000))) {
-            setInitialDeposit(value === "" ? "" : Number(value));
+      {/* First question and input in a flex row */}
+      <div className="flex items-center mb-4">
+        <h2 className="text-base font-bold text-white mr-2">
+          How much do you want to invest?
+        </h2>
+        <input
+          type="text"
+          min="1"
+          max="5000000"
+          step="1"
+          value={
+            initialDeposit === ""
+              ? "$"
+              : `$${Math.round(initialDeposit).toLocaleString()}`
           }
-        }}
-        style={{ height: "30px" }}
-        className="w-full text-black border border-[#AA8355] px-2 rounded-lg bg-white mb-4 focus:outline-none focus:ring-2 focus:ring-[#AA8355]"
-      />
+          onChange={(e) => {
+            const value = e.target.value.replace(/\$/g, "").replace(/,/g, "");
+            if (
+              !isNaN(value) &&
+              (value === "" || (value >= 1 && value <= 5000000))
+            ) {
+              setInitialDeposit(value === "" ? "" : Number(value));
+            }
+          }}
+          style={{ height: "30px" }}  // sets the height of the white box
+          className="w-1/2 text-black border border-[#AA8355] px-2 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#AA8355]"
+        />
+      </div>
 
       <h2 className="text-base font-bold mb-2 text-white">
         How many years do you want to invest for?
@@ -110,7 +113,6 @@ const InvestmentCalculator = () => {
         <span>30 years</span>
       </div>
 
-      {/* Slider with negative top margin to move it higher */}
       <input
         type="range"
         min={1}
@@ -118,10 +120,10 @@ const InvestmentCalculator = () => {
         step={1}
         value={years}
         onChange={(e) => setYears(Number(e.target.value))}
-        className="w-full -mt-5 mb-4 slider-thumb-gold"
+        className="w-full -mt-4 mb-4 slider-thumb-gold"
       />
 
-      <ResponsiveContainer width="100%" height={250}>
+      <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data} margin={{ left: 50, right: 10 }}>
           <CartesianGrid
             stroke="#FFFFFF"
@@ -148,7 +150,7 @@ const InvestmentCalculator = () => {
               position: "insideLeft",
               fill: "#AA8355",
               dy: 0,
-              dx: -50, // reset to -50
+              dx: -50,
             }}
             domain={["auto", "auto"]}
             tick={{ fill: "#AA8355" }}
