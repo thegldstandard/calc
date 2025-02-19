@@ -41,7 +41,7 @@ const InvestmentCalculator = () => {
   }, [initialDeposit, years]);
 
   return (
-    <div className="p-4 max-w-md mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] font-['DM Serif Display']">
+    <div className="p-4 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.5px] font-['DM Serif Display']">
       {/* Inline styles for the slider */}
       <style>
         {`
@@ -64,7 +64,7 @@ const InvestmentCalculator = () => {
             border-radius: 50%;
             border: 2px solid #ffffff;
             margin-top: -7px;
-            box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 2px rgba(0,0,0,0.4);
           }
           .slider-thumb-gold[type="range"]::-moz-range-thumb {
             height: 18px;
@@ -72,16 +72,15 @@ const InvestmentCalculator = () => {
             background-color: #AA8355;
             border-radius: 50%;
             border: 2px solid #ffffff;
-            box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 2px rgba(0,0,0,0.4);
           }
         `}
       </style>
 
-      <h2 className="text-2xl font-bold mb-2 text-white">
+      {/* Question Text */}
+      <h2 className="text-base font-bold mb-2 text-white">
         How much do you want to invest?
       </h2>
-
-      {/* Styled text input with reduced padding */}
       <input
         type="text"
         min="1"
@@ -104,7 +103,7 @@ const InvestmentCalculator = () => {
         className="w-full text-black border border-[#AA8355] p-2 rounded-lg bg-white mb-4 focus:outline-none focus:ring-2 focus:ring-[#AA8355]"
       />
 
-      <h2 className="text-2xl font-bold mb-2 text-white">
+      <h2 className="text-base font-bold mb-2 text-white">
         How many years do you want to invest for?
       </h2>
       <div className="flex justify-between text-[#AA8355] text-xs mb-2">
@@ -113,7 +112,6 @@ const InvestmentCalculator = () => {
         <span>30 years</span>
       </div>
 
-      {/* Styled range slider with reduced margin */}
       <input
         type="range"
         min={1}
@@ -124,9 +122,8 @@ const InvestmentCalculator = () => {
         className="w-full mt-2 mb-4 slider-thumb-gold"
       />
 
-      {/* Chart container height reduced for compact layout */}
       <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={data} margin={{ left: 30, right: 20 }}>
+        <LineChart data={data} margin={{ left: 70, right: 30 }}>
           <CartesianGrid
             stroke="#FFFFFF"
             strokeDasharray="0"
@@ -135,7 +132,12 @@ const InvestmentCalculator = () => {
           />
           <XAxis
             dataKey="year"
-            label={{ value: "Years", position: "insideBottom", dy: 5, fill: "#AA8355" }}
+            label={{
+              value: "Years",
+              position: "insideBottom",
+              dy: 5,
+              fill: "#AA8355",
+            }}
             tick={{ fill: "#AA8355" }}
             interval={years >= 15 ? 4 : years >= 10 ? 1 : 0}
             minTickGap={10}
@@ -147,11 +149,13 @@ const InvestmentCalculator = () => {
               position: "insideLeft",
               fill: "#AA8355",
               dy: 0,
-              dx: -40,
+              dx: -50, // increased left space for label
             }}
-            domain={[initialDeposit, "auto"]}
+            domain={["auto", "auto"]}
             tick={{ fill: "#AA8355" }}
-            tickFormatter={(tick) => `$${Math.round(tick).toLocaleString()}`}
+            tickFormatter={(tick) =>
+              `$${Math.round(tick).toLocaleString()}`
+            }
           />
           <Tooltip
             formatter={(value, name) =>
@@ -167,7 +171,7 @@ const InvestmentCalculator = () => {
             }}
             labelFormatter={(label) => `Year ${label}`}
           />
-          <Legend wrapperStyle={{ color: "#AA8355", marginTop: 250 }} />
+          <Legend wrapperStyle={{ color: "#AA8355", marginTop: 200 }} />
           <Line
             type="monotone"
             dataKey="Our Strategy"
@@ -187,8 +191,8 @@ const InvestmentCalculator = () => {
 
       <p className="mt-2 text-[10px] text-black">
         Disclaimer: This calculator is for educational purposes only and not financial advice.
-        Results are hypothetical and not guarantees of future performance. Investments carry risks, including loss of principal.
-        View Full Disclaimer
+        Results are hypothetical and not guarantees of future performance. Investments carry risks,
+        including loss of principal. View Full Disclaimer
       </p>
     </div>
   );
