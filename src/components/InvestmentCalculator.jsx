@@ -120,7 +120,7 @@ const InvestmentCalculator = () => {
       />
 
       <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={data} margin={{ left: 70, right: 10 }}>
+        <LineChart data={data} margin={{ left: 50, right: 10 }}>
           <CartesianGrid
             stroke="#FFFFFF"
             strokeDasharray="0"
@@ -146,7 +146,7 @@ const InvestmentCalculator = () => {
               position: "insideLeft",
               fill: "#AA8355",
               dy: 0,
-              dx: -50,
+              dx: -50, // increased further left
             }}
             domain={["auto", "auto"]}
             tick={{ fill: "#AA8355" }}
