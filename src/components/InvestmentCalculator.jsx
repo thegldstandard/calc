@@ -41,7 +41,7 @@ const InvestmentCalculator = () => {
   }, [initialDeposit, years]);
 
   return (
-    <div className="p-4 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.125px] font-['DM Serif Display']">
+    <div className="p-2 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.125px] font-['DM Serif Display']">
       {/* Inline styles for the slider */}
       <style>
         {`
@@ -104,13 +104,13 @@ const InvestmentCalculator = () => {
       <h2 className="text-base font-bold mb-2 text-white">
         How many years do you want to invest for?
       </h2>
-      <div className="flex justify-between text-[#AA8355] text-xs mb-2">
+      <div className="flex justify-between text-[#AA8355] text-xs -mb-1">
         <span>1 year</span>
         <span className="text-base font-bold text-[#AA8355]">{years} years</span>
         <span>30 years</span>
       </div>
 
-      {/* Moved slider up by setting top margin to 0 */}
+      {/* Slider with negative top margin to move it higher */}
       <input
         type="range"
         min={1}
@@ -118,11 +118,11 @@ const InvestmentCalculator = () => {
         step={1}
         value={years}
         onChange={(e) => setYears(Number(e.target.value))}
-        className="w-full mt-0 mb-4 slider-thumb-gold"
+        className="w-full -mt-5 mb-4 slider-thumb-gold"
       />
 
       <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={data} margin={{ left: 40, right: 10 }}>
+        <LineChart data={data} margin={{ left: 50, right: 10 }}>
           <CartesianGrid
             stroke="#FFFFFF"
             strokeDasharray="0"
@@ -148,7 +148,7 @@ const InvestmentCalculator = () => {
               position: "insideLeft",
               fill: "#AA8355",
               dy: 0,
-              dx: -50,
+              dx: -50, // reset to -50
             }}
             domain={["auto", "auto"]}
             tick={{ fill: "#AA8355" }}
