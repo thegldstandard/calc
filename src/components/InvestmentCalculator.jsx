@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -9,37 +9,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-// Custom YAxis label component that dynamically adjusts its position
-const CustomYAxisLabel = (props) => {
-  const { viewBox, value } = props;
-  const { x, y, height } = viewBox;
-  const textRef = useRef(null);
-  const [offset, setOffset] = useState(0);
-
-  useEffect(() => {
-    if (textRef.current) {
-      // Measure the rendered text's width
-      const bbox = textRef.current.getBBox();
-      // Set the offset to half the width plus a small extra padding (5px here)
-      setOffset(bbox.width / 2 + 5);
-    }
-  }, [value]);
-
-  return (
-    <text
-      ref={textRef}
-      x={x - offset}
-      y={y + height / 2}
-      fill="#AA8355"
-      textAnchor="middle"
-      dominantBaseline="middle"
-      transform={`rotate(-90, ${x - offset}, ${y + height / 2})`}
-    >
-      {value}
-    </text>
-  );
-};
 
 const InvestmentCalculator = () => {
   const [initialDeposit, setInitialDeposit] = useState(10000);
@@ -72,7 +41,7 @@ const InvestmentCalculator = () => {
   }, [initialDeposit, years]);
 
   return (
-    <div className="p-4 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.25px] font-['DM Serif Display']">
+    <div className="p-4 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.125px] font-['DM Serif Display']">
       {/* Inline styles for the slider */}
       <style>
         {`
@@ -151,7 +120,7 @@ const InvestmentCalculator = () => {
       />
 
       <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={data} margin={{ left: 40, right: 10 }}>
+        <LineChart data={data} margin={{ left: 70, right: 10 }}>
           <CartesianGrid
             stroke="#FFFFFF"
             strokeDasharray="0"
@@ -171,7 +140,14 @@ const InvestmentCalculator = () => {
             minTickGap={10}
           />
           <YAxis
-            label={<CustomYAxisLabel value="Value ($)" />}
+            label={{
+              value: "Value ($)",
+              angle: -90,
+              position: "insideLeft",
+              fill: "#AA8355",
+              dy: 0,
+              dx: -50,
+            }}
             domain={["auto", "auto"]}
             tick={{ fill: "#AA8355" }}
             tickFormatter={(tick) =>
