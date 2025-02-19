@@ -93,10 +93,7 @@ const InvestmentCalculator = () => {
         }
         onChange={(e) => {
           const value = e.target.value.replace(/\$/g, "").replace(/,/g, "");
-          if (
-            !isNaN(value) &&
-            (value === "" || (value >= 1 && value <= 5000000))
-          ) {
+          if (!isNaN(value) && (value === "" || (value >= 1 && value <= 5000000))) {
             setInitialDeposit(value === "" ? "" : Number(value));
           }
         }}
@@ -123,7 +120,8 @@ const InvestmentCalculator = () => {
       />
 
       <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={data} margin={{ left: 70, right: 30 }}>
+        {/* Reduced left margin to 40 so that the chart (and YAxis label) shifts left */}
+        <LineChart data={data} margin={{ left: 40, right: 30 }}>
           <CartesianGrid
             stroke="#FFFFFF"
             strokeDasharray="0"
@@ -149,9 +147,9 @@ const InvestmentCalculator = () => {
               position: "insideLeft",
               fill: "#AA8355",
               dy: 0,
-              dx: -50, // increased left space for label
+              dx: -35, // shifted slightly left
             }}
-            domain={["auto", "auto"]}
+            domain={['auto', 'auto']}
             tick={{ fill: "#AA8355" }}
             tickFormatter={(tick) =>
               `$${Math.round(tick).toLocaleString()}`
