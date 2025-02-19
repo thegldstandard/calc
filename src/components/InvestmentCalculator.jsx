@@ -110,7 +110,7 @@ const InvestmentCalculator = () => {
         <span>30 years</span>
       </div>
 
-      {/* Moved slider up by reducing margin-top from mt-2 to mt-1 */}
+      {/* Moved slider up by setting top margin to 0 */}
       <input
         type="range"
         min={1}
@@ -118,7 +118,7 @@ const InvestmentCalculator = () => {
         step={1}
         value={years}
         onChange={(e) => setYears(Number(e.target.value))}
-        className="w-full mt-1 mb-4 slider-thumb-gold"
+        className="w-full mt-0 mb-4 slider-thumb-gold"
       />
 
       <ResponsiveContainer width="100%" height={250}>
@@ -148,7 +148,7 @@ const InvestmentCalculator = () => {
               position: "insideLeft",
               fill: "#AA8355",
               dy: 0,
-              dx: -50, // reverted back to -50
+              dx: -50,
             }}
             domain={["auto", "auto"]}
             tick={{ fill: "#AA8355" }}
