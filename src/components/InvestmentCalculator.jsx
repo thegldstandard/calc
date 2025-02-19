@@ -39,7 +39,7 @@ const InvestmentCalculator = () => {
   }, [initialDeposit, years]);
 
   return (
-    <div className="p-2 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.125px] font-['DM Serif Display']">
+    <div className="p-3 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.125px] font-['DM Serif Display']">
       {/* Inline styles for the slider */}
       <style>
         {`
