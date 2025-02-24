@@ -99,7 +99,7 @@ const InvestmentCalculator = () => {
               setInitialDeposit(value === "" ? "" : Number(value));
             }
           }}
-          style={{ height: "30px" }}  // sets the height of the white box
+          style={{ height: "30px" }}  // sets the height of the white input box
           className="w-1/2 text-black border border-[#AA8355] px-2 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#AA8355]"
         />
       </div>
@@ -193,7 +193,15 @@ const InvestmentCalculator = () => {
       <p className="mt-2 text-[10px] text-black">
         Disclaimer: This calculator is for educational purposes only and not financial advice.
         Results are hypothetical and not guarantees of future performance. Investments carry risks,
-        including loss of principal. View Full Disclaimer
+        including loss of principal.{" "}
+        <a
+          href="https://thegoldstandard.com/disclaimer/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline text-white"
+        >
+          View Full Disclaimer
+        </a>
       </p>
     </div>
   );
