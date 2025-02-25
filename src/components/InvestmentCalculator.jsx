@@ -45,7 +45,7 @@ const InvestmentCalculator = () => {
   const finalGoldValue =
     finalIndex >= 0 ? data[finalIndex]["Average Gold Performance"] : 0;
 
-  // Custom legend text
+  // Custom legend text to show final values
   const legendFormatter = (value) => {
     if (value === "Our Strategy") {
       return `Our Strategy ($${Math.round(finalOurStrategyValue).toLocaleString()})`;
@@ -126,6 +126,7 @@ const InvestmentCalculator = () => {
           How many years do you want to invest for?
         </h2>
       </div>
+
       {/* ========== EVERYTHING ELSE IN LEAGUE SPARTAN ========== */}
       <div className="font-['League Spartan']">
         <div className="flex justify-between text-[#AA8355] text-xs -mb-1">
@@ -151,7 +152,9 @@ const InvestmentCalculator = () => {
             <CartesianGrid
               stroke="#FFFFFF"
               strokeDasharray="0"
-              /* Show both horizontal and vertical lines in white */
+              strokeOpacity={0.2}     // 50% opacity
+              vertical={false}        // Remove all vertical lines
+              style={{ strokeWidth: 2 }}  // Make horizontal lines thicker
             />
             <XAxis
               dataKey="year"
@@ -163,7 +166,6 @@ const InvestmentCalculator = () => {
                 style: { fontFamily: "League Spartan" },
               }}
               tick={{ fill: "#AA8355", fontFamily: "League Spartan" }}
-              /* Make axis & tick lines white */
               axisLine={{ stroke: "#FFFFFF" }}
               tickLine={{ stroke: "#FFFFFF" }}
               interval={years >= 15 ? 4 : years >= 10 ? 1 : 0}
@@ -180,7 +182,6 @@ const InvestmentCalculator = () => {
               }}
               domain={["auto", "auto"]}
               tick={{ fill: "#AA8355", fontFamily: "League Spartan" }}
-              /* Make axis & tick lines white */
               axisLine={{ stroke: "#FFFFFF" }}
               tickLine={{ stroke: "#FFFFFF" }}
               tickFormatter={(tick) => `$${Math.round(tick).toLocaleString()}`}
@@ -212,23 +213,21 @@ const InvestmentCalculator = () => {
               type="monotone"
               dataKey="Our Strategy"
               stroke="#AA8355"
-              strokeWidth={2}
+              strokeWidth={5}    // Thicker line
               dot={false}
             />
             <Line
               type="monotone"
               dataKey="Average Gold Performance"
               stroke="#F6F2E7"
-              strokeWidth={2}
+              strokeWidth={5}    // Thicker line
               dot={false}
             />
           </LineChart>
         </ResponsiveContainer>
 
         <p className="mt-2 text-[10px] text-black">
-          Disclaimer: This calculator is for educational purposes only and not financial advice.
-          Results are hypothetical and not guarantees of future performance. Investments carry risks,
-          including loss of principal.{" "}
+          Disclaimer: This calculator applies an 8% annual rate for Gold and 7% compound + 8% non-compounding for Our Strategy. It is for informational purposes only and does not constitute financial advice. Results are hypothetical and not guaranteed. Investments carry risk, including loss of principal.{" "}
           <a
             href="https://thegoldstandard.com/disclaimer/"
             target="_blank"
