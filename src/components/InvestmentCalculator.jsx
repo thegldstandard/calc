@@ -38,8 +38,25 @@ const InvestmentCalculator = () => {
     setData(results);
   }, [initialDeposit, years]);
 
+  // Capture final values to display in the legend
+  const finalIndex = data.length - 1;
+  const finalOurStrategyValue =
+    finalIndex >= 0 ? data[finalIndex]["Our Strategy"] : 0;
+  const finalGoldValue =
+    finalIndex >= 0 ? data[finalIndex]["Average Gold Performance"] : 0;
+
+  // Custom legend text
+  const legendFormatter = (value) => {
+    if (value === "Our Strategy") {
+      return `Our Strategy ($${Math.round(finalOurStrategyValue).toLocaleString()})`;
+    } else if (value === "Average Gold Performance") {
+      return `Average Gold Performance ($${Math.round(finalGoldValue).toLocaleString()})`;
+    }
+    return value;
+  };
+
   return (
-    <div className="p-3 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.125px] font-['DM Serif Display']">
+    <div className="p-3 max-w-xl mx-auto bg-[#183965] text-white shadow-lg rounded-xl border border-[#AA8355] border-[0.125px]">
       {/* Inline styles for the slider */}
       <style>
         {`
@@ -75,134 +92,154 @@ const InvestmentCalculator = () => {
         `}
       </style>
 
-      {/* First question and input in a flex row */}
-      <div className="flex items-center mb-4">
-        <h2 className="text-base font-bold text-white mr-2">
-          How much do you want to invest?
+      {/* ========== TOP QUESTIONS (KEEP IN DM Serif Display) ========== */}
+      <div className="mb-4 font-['DM Serif Display']">
+        <div className="flex items-center mb-4">
+          <h2 className="text-base font-bold text-white mr-2">
+            How much do you want to invest?
+          </h2>
+          <input
+            type="text"
+            min="1"
+            max="5000000"
+            step="1"
+            value={
+              initialDeposit === ""
+                ? "$"
+                : `$${Math.round(initialDeposit).toLocaleString()}`
+            }
+            onChange={(e) => {
+              const value = e.target.value.replace(/\$/g, "").replace(/,/g, "");
+              if (
+                !isNaN(value) &&
+                (value === "" || (value >= 1 && value <= 5000000))
+              ) {
+                setInitialDeposit(value === "" ? "" : Number(value));
+              }
+            }}
+            style={{ height: "30px" }} // sets the height of the white input box
+            className="w-1/2 text-black border border-[#AA8355] px-2 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#AA8355]"
+          />
+        </div>
+
+        <h2 className="text-base font-bold mb-2 text-white">
+          How many years do you want to invest for?
         </h2>
+      </div>
+      {/* ========== EVERYTHING ELSE IN LEAGUE SPARTAN ========== */}
+      <div className="font-['League Spartan']">
+        <div className="flex justify-between text-[#AA8355] text-xs -mb-1">
+          <span>1 year</span>
+          <span className="text-base font-bold text-[#AA8355]">
+            {years} years
+          </span>
+          <span>30 years</span>
+        </div>
+
         <input
-          type="text"
-          min="1"
-          max="5000000"
-          step="1"
-          value={
-            initialDeposit === ""
-              ? "$"
-              : `$${Math.round(initialDeposit).toLocaleString()}`
-          }
-          onChange={(e) => {
-            const value = e.target.value.replace(/\$/g, "").replace(/,/g, "");
-            if (
-              !isNaN(value) &&
-              (value === "" || (value >= 1 && value <= 5000000))
-            ) {
-              setInitialDeposit(value === "" ? "" : Number(value));
-            }
-          }}
-          style={{ height: "30px" }}  // sets the height of the white input box
-          className="w-1/2 text-black border border-[#AA8355] px-2 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#AA8355]"
+          type="range"
+          min={1}
+          max={30}
+          step={1}
+          value={years}
+          onChange={(e) => setYears(Number(e.target.value))}
+          className="w-full -mt-4 mb-4 slider-thumb-gold"
         />
+
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={data} margin={{ left: 50, right: 10 }}>
+            <CartesianGrid
+              stroke="#FFFFFF"
+              strokeDasharray="0"
+              /* Show both horizontal and vertical lines in white */
+            />
+            <XAxis
+              dataKey="year"
+              label={{
+                value: "Years",
+                position: "insideBottom",
+                dy: 5,
+                fill: "#AA8355",
+                style: { fontFamily: "League Spartan" },
+              }}
+              tick={{ fill: "#AA8355", fontFamily: "League Spartan" }}
+              /* Make axis & tick lines white */
+              axisLine={{ stroke: "#FFFFFF" }}
+              tickLine={{ stroke: "#FFFFFF" }}
+              interval={years >= 15 ? 4 : years >= 10 ? 1 : 0}
+              minTickGap={10}
+            />
+            <YAxis
+              label={{
+                value: "Value ($)",
+                angle: -90,
+                position: "insideLeft",
+                fill: "#AA8355",
+                dx: -50,
+                style: { fontFamily: "League Spartan" },
+              }}
+              domain={["auto", "auto"]}
+              tick={{ fill: "#AA8355", fontFamily: "League Spartan" }}
+              /* Make axis & tick lines white */
+              axisLine={{ stroke: "#FFFFFF" }}
+              tickLine={{ stroke: "#FFFFFF" }}
+              tickFormatter={(tick) => `$${Math.round(tick).toLocaleString()}`}
+            />
+            <Tooltip
+              formatter={(value, name) =>
+                name !== "year"
+                  ? `$${Math.round(Number(value)).toLocaleString()}`
+                  : null
+              }
+              contentStyle={{
+                backgroundColor: "#183965",
+                color: "#AA8355",
+                padding: "10px",
+                textAlign: "left",
+                fontFamily: "League Spartan",
+              }}
+              labelFormatter={(label) => `Year ${label}`}
+            />
+            <Legend
+              formatter={legendFormatter}
+              wrapperStyle={{
+                color: "#AA8355",
+                marginTop: 200,
+                fontFamily: "League Spartan",
+              }}
+            />
+            <Line
+              type="monotone"
+              dataKey="Our Strategy"
+              stroke="#AA8355"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="Average Gold Performance"
+              stroke="#F6F2E7"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+
+        <p className="mt-2 text-[10px] text-black">
+          Disclaimer: This calculator is for educational purposes only and not financial advice.
+          Results are hypothetical and not guarantees of future performance. Investments carry risks,
+          including loss of principal.{" "}
+          <a
+            href="https://thegoldstandard.com/disclaimer/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-white"
+            style={{ fontFamily: "League Spartan" }}
+          >
+            View Full Disclaimer
+          </a>
+        </p>
       </div>
-
-      <h2 className="text-base font-bold mb-2 text-white">
-        How many years do you want to invest for?
-      </h2>
-      <div className="flex justify-between text-[#AA8355] text-xs -mb-1">
-        <span>1 year</span>
-        <span className="text-base font-bold text-[#AA8355]">{years} years</span>
-        <span>30 years</span>
-      </div>
-
-      <input
-        type="range"
-        min={1}
-        max={30}
-        step={1}
-        value={years}
-        onChange={(e) => setYears(Number(e.target.value))}
-        className="w-full -mt-4 mb-4 slider-thumb-gold"
-      />
-
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data} margin={{ left: 50, right: 10 }}>
-          <CartesianGrid
-            stroke="#FFFFFF"
-            strokeDasharray="0"
-            vertical={false}
-            fill="#183965"
-          />
-          <XAxis
-            dataKey="year"
-            label={{
-              value: "Years",
-              position: "insideBottom",
-              dy: 5,
-              fill: "#AA8355",
-            }}
-            tick={{ fill: "#AA8355" }}
-            interval={years >= 15 ? 4 : years >= 10 ? 1 : 0}
-            minTickGap={10}
-          />
-          <YAxis
-            label={{
-              value: "Value ($)",
-              angle: -90,
-              position: "insideLeft",
-              fill: "#AA8355",
-              dy: 0,
-              dx: -50,
-            }}
-            domain={["auto", "auto"]}
-            tick={{ fill: "#AA8355" }}
-            tickFormatter={(tick) =>
-              `$${Math.round(tick).toLocaleString()}`
-            }
-          />
-          <Tooltip
-            formatter={(value, name) =>
-              name !== "year"
-                ? `$${Math.round(Number(value)).toLocaleString()}`
-                : null
-            }
-            contentStyle={{
-              backgroundColor: "#183965",
-              color: "#AA8355",
-              padding: "10px",
-              textAlign: "left",
-            }}
-            labelFormatter={(label) => `Year ${label}`}
-          />
-          <Legend wrapperStyle={{ color: "#AA8355", marginTop: 200 }} />
-          <Line
-            type="monotone"
-            dataKey="Our Strategy"
-            stroke="#AA8355"
-            strokeWidth={2}
-            dot={false}
-          />
-          <Line
-            type="monotone"
-            dataKey="Average Gold Performance"
-            stroke="#F6F2E7"
-            strokeWidth={2}
-            dot={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-
-      <p className="mt-2 text-[10px] text-black">
-        Disclaimer: This calculator is for educational purposes only and not financial advice.
-        Results are hypothetical and not guarantees of future performance. Investments carry risks,
-        including loss of principal.{" "}
-        <a
-          href="https://thegoldstandard.com/disclaimer/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline text-white"
-        >
-          View Full Disclaimer
-        </a>
-      </p>
     </div>
   );
 };
